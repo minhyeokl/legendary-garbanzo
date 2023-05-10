@@ -17,15 +17,15 @@ def save_tokenized_sentences(sentences, output_filename):
             line = sentence.strip() + "\n"
             f.write(line)
 
-def process_files(directory):
+def process_files(directory, output_dir):
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
         if os.path.isdir(file_path):
-            process_files(file_path)  # 디렉터리인 경우 재귀적으로 처리
+            process_files(file_path, output_dir)  # 디렉터리인 경우 재귀적으로 처리
         else:
             sentences = tokenize_file(file_path)
             output_filename = os.path.basename(file_path)
-            output_filename = os.path.join(args.output, os.path.splitext(output_filename)[0] + "_tokenized.txt")
+            output_filename = os.path.join(output_dir, os.path.splitext(output_filename)[0] + "_tokenized.txt")
             save_tokenized_sentences(sentences=sentences, output_filename=output_filename)
 
 
@@ -35,7 +35,7 @@ def init():
     parser.add_argument('output', metavar='OUTPUT', type=str, default = "output/" ,help='path to the output directory')
     args = parser.parse_args()
 
-    process_files(args.source)
+    process_files(args.source, args.output)
     
 if __name__ == "__main__":
     init()
