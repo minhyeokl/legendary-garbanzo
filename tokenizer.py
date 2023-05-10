@@ -26,6 +26,8 @@ def process_files(directory, output_dir):
             sentences = tokenize_file(file_path)
             output_filename = os.path.basename(file_path)
             output_filename = os.path.join(output_dir, os.path.splitext(output_filename)[0] + "_tokenized.txt")
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
             save_tokenized_sentences(sentences=sentences, output_filename=output_filename)
 
 
