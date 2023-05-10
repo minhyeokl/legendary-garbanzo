@@ -5,7 +5,7 @@ from nltk.tokenize import sent_tokenize
 def tokenize_file(filename):
     with open(filename, "r", encoding="utf-8") as f:
         text = f.read()
-    # 문장을 토크나이징
+    # 문장 토크나이징
     sentences = sent_tokenize(text)
 
     return sentences
