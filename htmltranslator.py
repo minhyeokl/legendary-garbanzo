@@ -14,10 +14,10 @@ def translate_text_with_model(
 ):
     client = translate.TranslationServiceClient()
 
-    parent = f"projects/{project_id}/locations/{location}"
     location = 'us-central1',
+    parent = f"projects/{project_id}/locations/{location}"
     model_path = f"{parent}/models/{model_id}"
-    
+
     response = client.translate_text(
         request={
             "contents": [text],
