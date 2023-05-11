@@ -4,23 +4,29 @@ from bs4 import BeautifulSoup
 from google.cloud import translate
 from dotenv import load_dotenv
 
-client = translate.TranslationServiceClient()
 load_dotenv(verbose=True)
 PROJECT_ID = os.getenv('PROJECT_ID')
-
+MODEL_ID = os.getenv('MODEL_ID')
 def translate_text_with_model(
     text="",
     project_id=PROJECT_ID,
-    location = 'us-central1',
+    model_id=MODEL_ID,
 ):
-    parent = f"projects/{project_id}/locations/{location}"
-    response = client.translate_text(
-                                parent=parent,
-                                contents=[text],
-                                mime_type='text/html',
-                                source_language_code='en',
-                                target_language_code='ko')
+    client = translate.TranslationServiceClient()
 
+    parent = f"projects/{project_id}/locations/{location}"
+    location = 'us-central1',
+    model_path = f"{parent}/models/{model_id}"
+    
+    response = client.translate_text(
+        request={
+            "contents": [text],
+            "model": model_path,
+            "source_language_code": "en",
+            "target_language_code": "ko",
+            "parent": parent,
+            "mime_type": "text/html",  # mime types: text/plain, text/html
+        })
     for translation in response.translations:
         if translation == None:
             continue
