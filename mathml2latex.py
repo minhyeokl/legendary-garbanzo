@@ -50,8 +50,10 @@ def process_files(input_path, output_dir):
             os.makedirs(output_dir)
         equations = parse_mathmls_from_html_file(input_path)
         latex_equations = convert_mathmls_to_latex(equations)
+        i = 0
         for equation in latex_equations:
-            result.append([str(equation)])
+            i += 1
+            result.append([i, str(equation)])
         save_list_to_excel(result, output_filename)
         return
 
