@@ -13,15 +13,19 @@ def convert_html_to_markdown(input_file, output_dir):
     with open(output_filename, "w") as markdown_file:
         markdown_file.write(md_content)
 
-def process_files(directory, output_dir):
-    for filename in os.listdir(directory):
-        file_path = os.path.join(directory, filename)
-        if os.path.isdir(file_path):
-            process_files(file_path, output_dir)  # 디렉터리인 경우 재귀적으로 처리
-        else:
-            if not os.path.exists(output_dir):
-                os.makedirs(output_dir)
-            convert_html_to_markdown(file_path, output_dir)
+def process_files(input_path, output_dir):
+    if os.path.isfile(input_path):
+        output_filename = os.path.basename(input_path)
+        output_filename = os.path.join(output_dir, os.path.splitext(output_filename)[0] + "_tokenized.txt")
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        convert_html_to_markdown(input_path, output_dir)
+        return
+
+    for filename in os.listdir(input_path):
+        file_path = os.path.join(input_path, filename)
+        output_path = os.path.join(output_dir, os.path.basename(input_path))
+        process_files(file_path, output_path)
 
             
 def init():
