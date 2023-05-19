@@ -162,3 +162,4 @@ cython_debug/
 # Source and Output Files
 source/
 output/
+variants/
