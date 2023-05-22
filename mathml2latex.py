@@ -5,18 +5,13 @@ from lxml import etree
 from openpyxl import Workbook
 
 def save_list_to_excel(lst, filename):
-    # 새로운 워크북 생성
     wb = Workbook()
-    # 기본 시트 선택
     sheet = wb.active
-    # 리스트를 시트에 쓰기
     for row in lst:
         sheet.append(row)
-    # 파일 저장
     wb.save(filename)
 
 def mathml2latex(equation):
-    """ MathML to LaTeX conversion with XSLT from Vasil Yaroshevich """
     xslt_file = os.path.join('mathconverter', 'xsl_yarosh', 'mmltex.xsl')
     dom = etree.fromstring(equation.encode('utf-8'))
     xslt = etree.parse(xslt_file)
