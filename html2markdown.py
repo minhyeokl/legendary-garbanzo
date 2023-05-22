@@ -15,6 +15,11 @@ def convert_html_to_markdown(input_file, output_dir):
 
 def process_files(input_path, output_dir):
     if os.path.isfile(input_path):
+        file_ext = os.path.splitext(input_path)[1]
+        if file_ext != ".html":
+            print(f"Skipping file {input_path} - Invalid file extension")
+            return
+        
         output_filename = os.path.basename(input_path)
         output_filename = os.path.join(output_dir, os.path.splitext(output_filename)[0] + "_tokenized.txt")
         if not os.path.exists(output_dir):
